@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.Produto;
+import com.example.demo.model.exception.ResourceNotFoundException;
 
 @Repository
 public class ProdutoRepository {
@@ -42,6 +43,7 @@ public class ProdutoRepository {
     /**
      * Adiciona um produto ao repositório e atribui um ID único.
      * O ID é incrementado automaticamente a cada novo produto adicionado.
+     * 
      * @param Produto a ser adicionado ao repositório.
      * @return O produto adicionado com o ID atribuído.
      */
@@ -54,6 +56,7 @@ public class ProdutoRepository {
 
     /**
      * Método para deletar um produto do repositório pelo ID.
+     * 
      * @param id do produto a ser deletado.
      */
     public void deletar(Integer id) {
@@ -61,18 +64,21 @@ public class ProdutoRepository {
     }
 
     /**
-     * Método para atualizar um produto no repositório.  
+     * Método para atualizar um produto no repositório.
+     * 
      * @param produto a ser atualizado.
      * @return O produto atualizado ou null se o produto não existir.
      */
     public Produto atualizar(Produto produto) {
         Optional<Produto> produtoExistente = obterPorId(produto.getId());
-        if (produtoExistente.isPresent()) {
-            deletar(produto.getId());
-            produtos.add(produto);
-            return produto;
+
+        if (produtoExistente.isEmpty()) {
+            throw new ResourceNotFoundException("Produto não encontrado.");
         }
-        return null;
+
+        deletar(produto.getId());
+        produtos.add(produto);
+        return produto;
     }
     // #endregion
 
