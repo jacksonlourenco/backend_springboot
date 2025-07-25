@@ -1,21 +1,23 @@
 package com.example.demo.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Produto {
 
     // #region Atributos
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String nome;
-    private double preco;
     private Integer quantidade;
-    private String observacoes;
+    private double preco;
+    private String observacao;
 
-    public Produto(int id, String nome, double preco, int quantidade, String observacoes) {
-        this.id = id;
-        this.nome = nome;
-        this.preco = preco;
-        this.quantidade = quantidade;
-        this.observacoes = observacoes;
-    }
+    
     // #endregion
 
     // #region Getters e Setters
@@ -51,12 +53,12 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public String getObservacoes() {
-        return observacoes;
+    public String getObservacao() {
+        return observacao;
     }
 
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
     }
     // #endregion
 
